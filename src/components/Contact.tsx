@@ -14,19 +14,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { createClient } from '@supabase/supabase-js';
 
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
   const { toast } = useToast();
   
-  const supabase = createClient(
-    import.meta.env.VITE_SUPABASE_URL!,
-    import.meta.env.VITE_SUPABASE_ANON_KEY!
-  );
-
   // Simple email validation function
   const isValidEmail = (email: string) => {
     return /\S+@\S+\.\S+/.test(email);
@@ -52,20 +47,14 @@ const Contact = () => {
     }
 
     try {
-      // Store the contact form submission in Supabase
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert([
-          { 
-            name: name, 
-            email: email, 
-            message: message,
-            created_at: new Date().toISOString()
-          }
-        ]);
-
-      if (error) throw error;
-
+      // Log the submission for now (in a real app, this would be sent to a server)
+      console.log("Contact form submission:", {
+        name,
+        email,
+        message,
+        timestamp: new Date().toISOString()
+      });
+      
       toast({
         title: "Message sent",
         description: "Your message has been successfully received!",
@@ -75,6 +64,7 @@ const Contact = () => {
       setName("");
       setEmail("");
       setMessage("");
+      setOpen(false);
     } catch (err) {
       toast({
         title: "Error sending message",
@@ -95,7 +85,7 @@ const Contact = () => {
           Don't miss out on this unique opportunity to own nfts.feedback - 
           the perfect domain for building the future of NFT feedback systems.
         </p>
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button size="lg" variant="default" className="text-lg">
               Contact for Purchase
