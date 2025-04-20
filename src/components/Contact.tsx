@@ -14,18 +14,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { createClient } from "@supabase/supabase-js";
 
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const { toast } = useToast();
-
-  const supabase = createClient(
-    import.meta.env.VITE_SUPABASE_URL!, 
-    import.meta.env.VITE_SUPABASE_ANON_KEY!
-  );
 
   const handleSubmit = async () => {
     if (!name || !email || !message) {
@@ -38,16 +32,21 @@ const Contact = () => {
     }
 
     try {
-      const { error } = await supabase.functions.invoke('send-contact-email', {
+      // Instead of using Supabase directly, we'll use a simple fetch to our endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           name,
           email,
           message,
           recipientEmail: 'hassane9095@gmail.com'
-        })
+        }),
       });
 
-      if (error) throw error;
+      if (!response.ok) throw new Error('Failed to send message');
 
       toast({
         title: "Message sent",
