@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,9 +16,9 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
-  const [name, setName] = useState("Test User");
-  const [email, setEmail] = useState("test@example.com");
-  const [message, setMessage] = useState("Testing contact form email functionality with the new nfts.feedback domain");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   
@@ -108,7 +107,7 @@ const Contact = () => {
                 <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
-                  placeholder="Your name"
+                  placeholder="Enter your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -118,7 +117,7 @@ const Contact = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Your email address"
+                  placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -127,7 +126,7 @@ const Contact = () => {
                 <Label htmlFor="message">Message</Label>
                 <Textarea
                   id="message"
-                  placeholder="Write your message here..."
+                  placeholder="Add your message here..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="min-h-[150px]"
