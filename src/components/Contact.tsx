@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,7 +20,7 @@ const Contact = () => {
   const [name, setName] = useState("Test User");
   const [email, setEmail] = useState("test@example.com");
   const [message, setMessage] = useState("Testing contact form email functionality with the new nfts.feedback domain");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { toast } = useToast();
   
   const isValidEmail = (email: string) => {
