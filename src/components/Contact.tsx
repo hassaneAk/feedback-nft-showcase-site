@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { createClient } from "@supabase/supabase-js";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -21,7 +22,12 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const { toast } = useToast();
 
-  const handleSubmit = () => {
+  const supabase = createClient(
+    import.meta.env.VITE_SUPABASE_URL!, 
+    import.meta.env.VITE_SUPABASE_ANON_KEY!
+  );
+
+  const handleSubmit = async () => {
     if (!name || !email || !message) {
       toast({
         title: "Missing information",
@@ -31,14 +37,35 @@ const Contact = () => {
       return;
     }
 
-    // This will be replaced with actual email sending functionality once Supabase is connected
-    toast({
-      title: "Message received",
-      description: "Please connect Supabase to enable email sending functionality.",
-    });
-    setName("");
-    setEmail("");
-    setMessage("");
+    try {
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          recipientEmail: 'hassane9095@gmail.com'
+        })
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent",
+        description: "Your message has been successfully sent!",
+      });
+
+      // Reset form
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (err) {
+      toast({
+        title: "Error sending message",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive",
+      });
+      console.error(err);
+    }
   };
 
   return (
