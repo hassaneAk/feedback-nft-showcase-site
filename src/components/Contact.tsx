@@ -22,6 +22,11 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const { toast } = useToast();
   
+  const supabase = createClient(
+    import.meta.env.VITE_SUPABASE_URL!,
+    import.meta.env.VITE_SUPABASE_ANON_KEY!
+  );
+
   // Simple email validation function
   const isValidEmail = (email: string) => {
     return /\S+@\S+\.\S+/.test(email);
@@ -47,17 +52,20 @@ const Contact = () => {
     }
 
     try {
-      // Since we're having issues with Supabase environment variables,
-      // let's use a simpler approach for now
-      
-      // Log the submission for now (in a real app, this would be sent to a server)
-      console.log("Contact form submission:", {
-        name,
-        email,
-        message
-      });
-      
-      // Show success message
+      // Store the contact form submission in Supabase
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert([
+          { 
+            name: name, 
+            email: email, 
+            message: message,
+            created_at: new Date().toISOString()
+          }
+        ]);
+
+      if (error) throw error;
+
       toast({
         title: "Message sent",
         description: "Your message has been successfully received!",
