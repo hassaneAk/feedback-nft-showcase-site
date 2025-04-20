@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -47,13 +48,13 @@ const Contact = () => {
     }
 
     try {
-      // Log the submission for now (in a real app, this would be sent to a server)
-      console.log("Contact form submission:", {
+      const { error } = await supabase.from('contact_submissions').insert({
         name,
         email,
-        message,
-        timestamp: new Date().toISOString()
+        message
       });
+
+      if (error) throw error;
       
       toast({
         title: "Message sent",
@@ -66,12 +67,12 @@ const Contact = () => {
       setMessage("");
       setOpen(false);
     } catch (err) {
+      console.error(err);
       toast({
         title: "Error sending message",
         description: "There was a problem sending your message. Please try again.",
         variant: "destructive",
       });
-      console.error(err);
     }
   };
 
