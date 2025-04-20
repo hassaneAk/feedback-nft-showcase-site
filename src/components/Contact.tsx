@@ -9,20 +9,35 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const { toast } = useToast();
 
   const handleSubmit = () => {
+    if (!name || !email || !message) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in all fields before sending.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     // This will be replaced with actual email sending functionality once Supabase is connected
     toast({
       title: "Message received",
       description: "Please connect Supabase to enable email sending functionality.",
     });
+    setName("");
+    setEmail("");
     setMessage("");
   };
 
@@ -50,12 +65,35 @@ const Contact = () => {
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
-              <Textarea
-                placeholder="Write your message here..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="min-h-[150px]"
-              />
+              <div className="grid gap-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="message">Message</Label>
+                <Textarea
+                  id="message"
+                  placeholder="Write your message here..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="min-h-[150px]"
+                />
+              </div>
             </div>
             <DialogFooter>
               <Button onClick={handleSubmit} className="w-full">
