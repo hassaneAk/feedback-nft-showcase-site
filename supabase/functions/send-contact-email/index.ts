@@ -29,9 +29,9 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("From:", email);
     console.log("Name:", name);
     
-    // Using a verified Resend domain email address as "from"
+    // Using the verified nfts.feedback domain email address
     const emailResponse = await resend.emails.send({
-      from: "onboarding@resend.dev", // Using Resend's default verified sender
+      from: "contact@nfts.feedback", // Using the new verified domain
       to: ["hassane9095@gmail.com"],
       reply_to: email,
       subject: `New Contact Form Message from ${name}`,
