@@ -25,8 +25,13 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { name, email, message }: ContactEmailRequest = await req.json();
 
+    console.log("Attempting to send email to:", "hassane9095@gmail.com");
+    console.log("From:", email);
+    console.log("Name:", name);
+    
+    // Using a verified Resend domain email address as "from"
     const emailResponse = await resend.emails.send({
-      from: "Contact Form <onboarding@resend.dev>",
+      from: "onboarding@resend.dev", // Using Resend's default verified sender
       to: ["hassane9095@gmail.com"],
       reply_to: email,
       subject: `New Contact Form Message from ${name}`,
@@ -38,7 +43,7 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    console.log("Email send response:", emailResponse);
 
     return new Response(JSON.stringify(emailResponse), {
       status: 200,
