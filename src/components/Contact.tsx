@@ -48,13 +48,21 @@ const Contact = () => {
     }
 
     try {
-      const { error } = await supabase.from('contact_submissions').insert({
+      // Store in database
+      const { error: dbError } = await supabase.from('contact_submissions').insert({
         name,
         email,
         message
       });
 
-      if (error) throw error;
+      if (dbError) throw dbError;
+
+      // Send email
+      const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
+        body: { name, email, message }
+      });
+
+      if (emailError) throw emailError;
       
       toast({
         title: "Message sent",
