@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,13 +16,12 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("Test User");
+  const [email, setEmail] = useState("test@example.com");
+  const [message, setMessage] = useState("Testing contact form email functionality with the new nfts.feedback domain");
+  const [open, setOpen] = useState(true);
   const { toast } = useToast();
   
-  // Simple email validation function
   const isValidEmail = (email: string) => {
     return /\S+@\S+\.\S+/.test(email);
   };
@@ -48,7 +46,6 @@ const Contact = () => {
     }
 
     try {
-      // Store in database
       const { error: dbError } = await supabase.from('contact_submissions').insert({
         name,
         email,
@@ -57,7 +54,6 @@ const Contact = () => {
 
       if (dbError) throw dbError;
 
-      // Send email
       const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
         body: { name, email, message }
       });
@@ -69,7 +65,6 @@ const Contact = () => {
         description: "Your message has been successfully received!",
       });
 
-      // Reset form
       setName("");
       setEmail("");
       setMessage("");
