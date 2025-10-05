@@ -46,16 +46,15 @@ const Contact = () => {
     }
 
     try {
-      // Replace these with your EmailJS credentials
       await emailjs.send(
-        'YOUR_SERVICE_ID',  // Get from EmailJS dashboard
-        'YOUR_TEMPLATE_ID', // Get from EmailJS dashboard
+        'service_nftsfeedback',
+        'YOUR_TEMPLATE_ID', // Create template in EmailJS dashboard
         {
           from_name: name,
           from_email: email,
           message: message,
         },
-        'YOUR_PUBLIC_KEY' // Get from EmailJS dashboard
+        'YOUR_PUBLIC_KEY' // Get from Account > API Keys in EmailJS
       );
       
       toast({
