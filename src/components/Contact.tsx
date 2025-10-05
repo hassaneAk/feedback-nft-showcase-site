@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -46,19 +46,17 @@ const Contact = () => {
     }
 
     try {
-      const { error: dbError } = await supabase.from('contact_submissions').insert({
-        name,
-        email,
-        message
-      });
-
-      if (dbError) throw dbError;
-
-      const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
-        body: { name, email, message }
-      });
-
-      if (emailError) throw emailError;
+      // Replace these with your EmailJS credentials
+      await emailjs.send(
+        'YOUR_SERVICE_ID',  // Get from EmailJS dashboard
+        'YOUR_TEMPLATE_ID', // Get from EmailJS dashboard
+        {
+          from_name: name,
+          from_email: email,
+          message: message,
+        },
+        'YOUR_PUBLIC_KEY' // Get from EmailJS dashboard
+      );
       
       toast({
         title: "Message sent",
