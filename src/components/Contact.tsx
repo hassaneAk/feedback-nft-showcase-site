@@ -48,13 +48,13 @@ const Contact = () => {
     try {
       await emailjs.send(
         'service_nftsfeedback',
-        'YOUR_TEMPLATE_ID', // Create template in EmailJS dashboard
+        'template_k6lm5od',
         {
           from_name: name,
           from_email: email,
           message: message,
         },
-        'YOUR_PUBLIC_KEY' // Get from Account > API Keys in EmailJS
+        'XjaeaRik_XRRf_kC2'
       );
       
       toast({
