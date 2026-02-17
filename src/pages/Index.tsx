@@ -5,11 +5,17 @@ import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Hero />
-      <UseCases />
-      <Contact />
-    </div>
+    <main className="min-h-screen bg-background">
+      <header>
+        <Hero />
+      </header>
+      <section aria-label="Use Cases">
+        <UseCases />
+      </section>
+      <section aria-label="Contact">
+        <Contact />
+      </section>
+    </main>
   );
 };
 
