@@ -50,11 +50,17 @@ const Hero = () => {
           <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-text">
             NFTs.Feedback
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8">
-            The Perfect Domain for Your Next-Generation NFT Feedback Platform
+          <p className="text-xl md:text-2xl text-gray-300 mb-2">
+            Premium Web3 Domain for NFT Review & Reputation Platform
           </p>
-          <p className="text-2xl md:text-3xl font-semibold text-primary mb-4">
-            This domain is for sale
+          <p className="text-lg md:text-xl text-gray-400 mb-6">
+            Own the Brand Before Someone Else Does.
+          </p>
+          <p className="text-3xl md:text-4xl font-bold text-primary mb-2">
+            Buy Now: $2,950
+          </p>
+          <p className="text-lg text-gray-300 mb-6">
+            or Make an Offer
           </p>
           <div className="flex justify-center gap-4">
             <Dialog open={open} onOpenChange={setOpen}>
@@ -125,6 +131,10 @@ const Hero = () => {
                 </div>
               </DialogContent>
             </Dialog>
+          </div>
+          <div className="mt-8 flex flex-col items-center gap-2 text-sm text-muted-foreground">
+            <p>✅ Secure transaction via Sedo Escrow</p>
+            <p>⚡ Fast domain transfer</p>
           </div>
           <div className="mt-12 animate-float">
             <div className="w-24 h-24 mx-auto bg-gradient-to-r from-purple-500 to-blue-500 rounded-full opacity-80 blur-xl" />
