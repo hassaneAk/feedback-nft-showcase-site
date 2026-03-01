@@ -66,7 +66,7 @@ const Hero = () => {
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button size="lg" variant="default" className="text-lg">
-                  Make an Offer
+                  Buy Now
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
