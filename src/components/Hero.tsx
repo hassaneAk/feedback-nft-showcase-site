@@ -53,6 +53,9 @@ const Hero = () => {
           <p className="text-xl md:text-2xl text-gray-300 mb-8">
             The Perfect Domain for Your Next-Generation NFT Feedback Platform
           </p>
+          <p className="text-2xl md:text-3xl font-semibold text-primary mb-4">
+            This domain is for sale
+          </p>
           <div className="flex justify-center gap-4">
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
